@@ -1,0 +1,244 @@
+$(function() {
+	$( "#Searchme" ).click(function() {
+		console.log("D");
+		var propType = $("#propertyA").val();
+	    var minPpl =  $("#numberPpl").val();
+		var minPrice = $("#amount").val();
+		alert(propType);
+		alert(minPpl);
+		alert(minPrice);
+		var output="<ul>";
+		   for (var i in data.properties) {
+			  if (( propType == data.properties[i].type) || (propType=="Any"))
+			  if ( minPpl >= data.properties[i].ppl )
+			  if ( data.properties[i].price >= minPrice)
+			   {
+				  {
+				   {
+					   {
+							   output+="<h2><li>" + "$" + data.properties[i].price +"</li></h2>" + "<img src=" + data.properties[i].picture + ">" + "<p>" + data.properties[i].description + "</p>" + "<button><a href='" + data.properties[i].url + "'>Visit Page</a></button>";
+						   } } } } 
+						   
+						   
+						   
+						   
+						// output+="<h2><li>" + "$" + data.properties[i].price +"</li></h2>" + "<img src=" + data.properties[i].picture + ">" + "<p>" + data.properties[i].description + "</p>" + "<button><a href='" + data.properties[i].url + "'>Visit Page</a></button>";   
+						   }
+				 output+="</ul>";
+				document.getElementById( "Placeholder" ).innerHTML = output;
+		   
+
+		   });
+		   
+
+$(function() {
+	$( "#viewFavourites" ).on("click", function(){
+		alert("B");
+		
+		console.log("Restoring array data from local storage");
+		
+		myFavouriteRest=JSON.parse(localStorage.getItem("favProp"));
+		
+		var output = "<ul>";
+		
+		if (myFavouriteRest != null) {
+			
+			for (var i = 0; i < data.properties.length; i++) {
+				for (j = 0; j < myFavouriteRest.length; j++) {
+					
+					if (data.properties[i].id == myFavouriteRest[j]) {
+						
+						output+="<h5><li>" + data.properties[i].ppl + " people" + " " + data.properties[i].type + "</li></h5>" + 
+"<img src=" + data.properties[i].picture + ">" +"<li><button><a href=' " +data.properties[i].url + "'>Visit page</a></button></li>";
+					}
+				}
+			}
+		}
+		output+="</ul>";
+		
+		document.getElementById( "Placeholder2" ).innerHTML = output;
+	
+	});
+});
+
+
+$(function() {
+	$( "#clearFavourites" ).click(function() {
+		alert("C");
+		$("#Placeholder2").remove();
+		
+		myFavouriteRest=JSON.parse(localStorage.getItem("favProp"));
+		
+		localStorage.setItem("favProp", "");;
+		
+	});
+	
+});
+
+$(function() {
+
+	$( ".addFavourites" ).on("click", function(){
+			alert("!!!");
+		
+		try {
+			$(this).attr('disabled', true);
+			
+			var restIdToAdd = $(this).closest("p").attr("id");
+			
+			var myFavouriteRest=JSON.parse(localStorage.getItem("favProp"));
+			
+						alert(restIdToAdd);
+
+			
+			if(myFavouriteRest == null) {
+
+				myFavouriteRest = [];
+			}
+			
+			if(myFavouriteRest != null) {
+			
+				for ( var j = 0; j < myFavouriteRest.length; j++) {
+					
+					if ( restIdToAdd == myFavouriteRest[j]) {
+						
+						alert("This property is already in your favourites"); 
+						myFavouriteRest = [];
+					}
+				}
+			}
+			
+			myFavouriteRest.push(restIdToAdd);
+			
+			localStorage.setItem("favProp", JSON.stringify(myFavouriteRest));
+			
+		}
+		
+		catch (e) {
+			if (e) {
+				console.log("Error: Local storage limit exceeds");
+			}
+			
+			else {
+				console.log("ERROR: Saving to local storge.");
+			}
+		}
+	});
+});
+
+
+
+
+$(function() {
+	$( ".removeFavourites" ).click(function() {
+			alert("A");
+		
+			$(this).attr('disabled', true);
+			
+			var restIdToRemove = $(this).closest("p").attr("id");
+			
+			
+			 myFavouriteRest=JSON.parse(localStorage.getItem("favProp"));
+			
+			
+			if(myFavouriteRest != null) {
+				for ( var j = 0; j < myFavouriteRest.length; j++) {
+					
+					if ( restIdToRemove == myFavouriteRest[j]) {
+						
+						alert("This Resturant has been removed");
+						
+						delete myFavouriteRest[j];
+						
+						localStorage.setItem("favProp", JSON.stringify(myFavouriteRest));
+						
+						myFavouriteRest[j] = [];
+					}
+				}
+			}
+			
+			if(myFavouriteRest == null) {
+				alert("You have no favourite items");
+			}
+		});
+	});
+	
+	
+	
+	<script>
+
+var data = { 
+
+	"properties": [
+        {
+            "id":"rest1",
+			"type":"Noodles",
+            "ppl":3,
+			"price":30,
+			"description":"TamJai SamGor Mixian brand is a fast casual restaurant chain in Hong Kong with operations in Singapore. Our brand has over 12 years of history and the first restaurant under the TamJai SamGor Mixian brand in Hong Kong was opened in 2008. In 2020, we opened our first restaurant under our brand in Singapore.",
+			"picture":"assets/img/TamJaiSanGor.jpg",
+			"url":"/rest1",
+
+        },
+		{
+            "id":"rest2",
+			"type":"Noodles",
+            "ppl":2,
+			"price":35,
+			"description":"Mixian Sense is a mid-range Chinese restaurant chain under the Hong Kong Café de Coral Group",
+			"picture":"assets/img/MaiSinTseung.png",
+			"url":"/rest2",
+
+        },
+		{
+            "id":"rest3",
+			"type":"Rice",
+            "ppl":5,
+			"price":40,
+			"description":"Kwong Wing Catering is a chain restaurant group in Hong Kong",
+			"picture":"assets/img/GurnWing.jpg",
+			"url":"/rest3",
+
+        },
+		{
+            "id":"rest4",
+			"type":"Noodles",
+            "ppl":7,
+			"price":45,
+			"description":"Yun Guixiang was established in 1997. The first shop was established in Lu Tak Wai, Tsuen Wan. With traditional Yunnan flavor soup base",
+			"picture":"assets/img/WanGuaiHeung.jpg",
+			"url":"/rest4",
+
+        },
+		{
+            "id":"rest5",
+			"type":"Rice",
+            "ppl":11,
+			"price":50,
+			"description":"Café de JarGor is a tea restaurant brand in Hong Kong",
+			"picture":"assets/img/DaiJarGor.jpg",
+			"url":"/rest5",
+
+        },
+		{
+            "id":"rest6",
+			"type":"Rice",
+            "ppl":9,
+			"price":60,
+			"description":"“Men Wah Bing Teng” serves Hong Kong traditional “bing sutt” with western-style fast food snacks.",
+			"picture":"assets/img/MenWah.png",
+			"url":"/rest6",
+
+        },
+		{
+            "id":"rest7",
+			"type":"Noodles",
+            "ppl":6,
+			"price":70,
+			"description":"Vietnam Beef Noodle Specialist Since 1970",
+			"picture":"assets/img/KamLaai.png",
+			"url":"/rest7",
+
+        }
+]}
+
+</script>

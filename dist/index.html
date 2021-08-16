@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Fav Foodie</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+		<style type="text/css">
+			html, body { height: 100%; margin: 0; padding: 0; }
+			#map { height: 100%; }
+		</style>
+    </head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+    var map;
+	var markers = [];
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat:  22.302711, lng: 114.177216},
+        zoom: 10
+		
+      });
+	    var marker_config = [{
+			position: {lat: 22.38333, lng: 114.18333},
+			map: map,
+			title:'Sha Tin'
+			},{
+			position: {lat: 22.45007, lng: 114.16877},
+			map: map,
+			title:'Tai Po'
+			},{
+			position: {lat: 22.39175, lng: 113.97157},
+			map: map,
+			title:'Tuen Mun'
+			},{
+			position: {lat: 22.38333, lng: 114.26667},
+			map: map,
+			title:'Sai Kung'
+			},{
+			position: {lat: 22.4400132399, lng: 114.022146578},
+			map: map,
+			title:'Yuen Long'
+			},{
+			position: {lat: 22.37066, lng: 114.10479},
+			map: map,
+			title:'Tsuen Wan'
+			},{
+			position: {lat: 22.35, lng: 114.18333},
+			map: map,
+			title:'Wong Tai Sin'
+			},{
+			position: {lat: 22.28142, lng: 114.17258},
+			map: map,
+			title:'Wan Chai'
+			},{
+			position: {lat: 22.45, lng: 114.03333},
+			map: map,
+			title:'Yuen Long'
+			},{
+			position: {lat: 22.33023, lng: 114.15945},
+			map: map,
+			title:'Sham Shui Po'
+			},{
+			position: {lat: 22.31667, lng: 114.18333},
+			map: map,
+			title:'Kowloon City'
+			},{
+			position: {lat: 22.28299, lng: 114.15846},
+			map: map,
+			title:'Central and Western'
+			},{
+			position: {lat: 22.1917, lng: 144.1021},
+			map: map,
+			title:'Yau Tsim Mong'
+			},{
+			position: {lat: 22.1540, lng: 113.5646},
+			map: map,
+			title:'Islands District'
+			},{
+			position: {lat: 22.2941, lng: 114.0817},
+			map: map,
+			title:'North District'
+			},{
+			position: {lat: 22.1848, lng: 114.1333},
+			map: map,
+			title:'Kung Tong'
+			},{
+			position: {lat: 22.1703, lng: 114.1327},
+			map: map,
+			title:'Eastern District'
+			},{
+			position: {lat: 22.1450, lng: 114.0932},
+			map: map,
+			title:'Southern District'
+		}];
+
+  
+			marker_config.forEach(function(e,i){
+			markers[i] = new google.maps.Marker(e);
+			markers[i].setMap(map);
+		});  
+	  
+	  
+    }
+
+    </script>
+	<script>
+	
+	
+	$( document ).ready(function() {
+    console.log("dd");
+	$.ajax({
+		type: "GET",
+		url: "https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=flw&lang=en", 
+		dataType: "json",
+		success: function(result, status, xhr){
+		console.log("result: ", result);
+		
+				
+	$("#apiresult").html(result.outlook+result.updateTime);
+	for(i=0; i<result.length; i++){
+		$("#apiresult").append(result);
+		$("#apiresult").append("</n>");
+		}
+	},
+	error: function (xhr, status, error){
+		alert("Result: "+ status + " " + error + " " + xhr.status + " " +xhr.statusText)
+	}
+	});	
+	});
+		$( document ).ready(function() {
+    console.log("ee");
+	$.ajax({
+  url: 'https://api.weatherstack.com/current',
+  data: {
+    access_key: '09bc8c8117940c8773e99e414844a3d0',
+    query: 'Hong Kong'
+  },
+  dataType: 'json',
+  success: function(apiResponse) {
+    console.log(`Current temperature in ${apiResponse.location.name} is ${apiResponse.current.temperature}℃`);
+  }
+});
+});
+	
+	function logout(){
+		localStorage.setItem("loginid", '');
+		localStorage.setItem("loginstatus", '');
+	}
+
+  
+	</script>
+<!--最底個mailbox vvvvvvvvvvvvvvv -->
+	<script>	
+	function check(){
+		var inputName=document.getElementById("inputName").value;
+		var inputEmail=document.getElementById("inputEmail").value;
+		var phone=document.getElementById("inputPhone").value;
+		var message=document.getElementById("inputMessage").value;
+		var mydataM ="inputName="+inputName+"&inputEmail="+inputEmail+"&inputPhone="+phone+"&inputMessage="+message;
+
+			//重要vvv
+		$.ajax({
+			type: 'POST',
+			//第一個API   vvvvv check_fav姐係去server
+            url: 'http://127.0.0.1:1234/check_common',
+			//json   vvvvv
+			dataType:"text",
+			dataM:mydataM,
+            success: function(dataM) {
+			alert(dataM);
+				if(data=="send_Message"){
+					alert(dataM);
+					localStorage.setItem("name", inputName);
+					localStorage.setItem("phoneNumber", phone);
+					localStorage.setItem("message", message);
+					//第二個API   vvvv
+					location.href="http://www.hyalinehk.com:9999/book";
+					
+				}else{
+					alert(dataM);
+				}
+				
+				//重要^^^
+            },
+            error: function(xhr, status, error) {
+                console.log('Error: ' + error);
+            }
+        });
+
+	//alert(usr);
+	//alert(pwd);
+	//alert(email);
+	return false;
+}
+	</script>
+		<script async src="https://cse.google.com/cse.js?cx=ea4c26d84e5564a03"></script>
+		
+		<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf82rorCQaw_yFNuFK9z2W-46zUCDvBm4&callback=initMap"> 
+		
+		</script>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#page-top">Still Thinking Your Meal?</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+					
+                        <li class="nav-item"><a class="nav-link" href="#Suggestion">What Do You Want</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#finding">Finding Resturant?</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#recommend">Provide Your Fav. Meal</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Find Someone</a></li>
+						<li class="nav-item"><a class="nav-link" href="/bbb">Member First</a></li>
+						<li class="nav-item"><a class="nav-link" href="/ccc">Hey I'm Member</a></li>
+						<li class="nav-item"><a class="nav-link" onclick="logout()">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead" id="Suggestion">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+						<h1 class="text-white font-weight-bold">What Do You Want</h1>
+                        <hr class="divider" />
+                    </div>
+					
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5">No idea for your lunch or dinner? Seacrh your favourite food below!</p>
+                        <div class="gcse-search"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- About-->
+		
+        <section class="page-section bg-primary" id="finding">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-40 gx-lg-50 justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="text-white mt-0">Hungry Now?</h2>
+                        <hr class="divider divider-light" />
+                        <p class="text-white-75 mb-4">Let me know your favour and provide something nice to you. Take your Selection below on map!</p>
+                        <div id = "map"></div>
+						<br><br><br><br><br><br><br><br><br><br><br><br>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Services-->
+        <section class="page-section" id="recommend">
+            <div class="container px-4 px-lg-5 align-items-center justify-content-center text-center">
+                <h2 class="text-center mt-0">Share and Select Your Own Fav. Restaurant</h2>
+                <hr class="divider" />
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-shop fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Tea Houses is the best!</h3>
+                            <p class="text-muted mb-0">West Toss, Egg Tart, Milk Tea, Pineallpe Bun, Red Bean Fleecy</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-star-fill fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Grand Western</h3>
+                            <p class="text-muted mb-0">Steak, Spaghetti, Pizza, House Wine</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-bullseye fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Chinese Restaurant</h3>
+                            <p class="text-muted mb-0">Dimsum, Side Dish, Yum Cha, Reunion Dinner</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="mt-5">
+                            <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
+                            <h3 class="h4 mb-2">Desert</h3>
+                            <p class="text-muted mb-0">Sweetened Red Bean Paste, Shaved Snow, Sago, Petit Gâteau</p>
+							
+
+                        </div>
+                    </div>
+                </div>
+					<br><br>
+					<a class="btn btn-primary btn-xl" href="/ddd">Select Here!</a>
+            </div>
+        </section>
+        <!-- Portfolio-->
+        <div id="portfolio">
+            <div class="container-fluid p-0">
+                <div class="row g-0">
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/MainDish.jpg" title="MainDish">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/MainDish.jpg" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50"></div>
+                                <div class="project-name">Main Dish</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/LightFood.jpg" title="LightFood">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/LightFood.jpg" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50"></div>
+                                <div class="project-name">Light Food</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/Dessert.jpg" title="Dessert">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/Dessert.jpg" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50"></div>
+                                <div class="project-name">Dessert</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/snack.jpg" title="Snack">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/snack.jpg" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50"></div>
+                                <div class="project-name">Snack</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/Wine.jpg" title="Wine">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/Wine.jpg" alt="..." />
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50"></div>
+                                <div class="project-name">Wine</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/Drink.jpg" title="Drink">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/Drink.jpg" alt="..." />
+                            <div class="portfolio-box-caption p-3">
+                                <div class="project-category text-white-50"></div>
+                                <div class="project-name">Drink</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact-->
+        <section class="page-section" id="contact">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6 text-center">
+                        <h2 class="mt-0">Find Someone Having Meal togeter?</h2>
+                        <hr class="divider" />
+                        <p class="text-muted mb-5">Enter Your Information to Pair your Ricemate</p>
+                    </div>
+                </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+                    <div class="col-lg-6">
+                        <form>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="inputName" type="text" placeholder="Enter your name..." />
+                                <label for="inputName">Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                <label for="inputEmail">Email</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="inputPhone" type="tel" placeholder="(123) 456-7890" />
+                                <label for="inputPhone">Phone Number</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter your message here..." style="height: 10rem"></textarea>
+                                <label for="inputMessage">Common</label>
+                            </div>
+                            <div class="d-grid"><button class="btn btn-primary btn-xl" type="submit">Send</button></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-4 text-center mb-5 mb-lg-0">
+                        <div id="apiresult"></div>
+						<div id = "apiResponse"></div>
+						<br><br>
+                        <i class="bi-phone fs-2 mb-3 text-muted"></i>
+
+						<div>72021350</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="bg-light py-5">
+            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2021 - ErrorNewNinja</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+		
+		
+    </body>
+</html>
